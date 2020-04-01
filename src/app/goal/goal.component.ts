@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Goal } from '../goal'
 import { GoalService } from '../goal-service/goal.service'
-import { GOALS} from '../goal'
+import { AlertService } from '../alert-service/alert.service'
+import { QuoteRequestService } from '../quote-http/quote-request.service'
+//import { HttpClient} from '@angular/common/http'
+import { Qote } from '../quote-class/qote';
 @Component({
   selector: 'app-goal',
   templateUrl: './goal.component.html',
@@ -11,12 +14,23 @@ import { GOALS} from '../goal'
 export class GoalComponent implements OnInit {
 
   goals:Goal[];
+  alertService:AlertService;
+  quotes:Qote
 
-  constructor( private goalService:GoalService) {
+
+  constructor(private goalService:GoalService, alertService:AlertService, private quoteService:QuoteRequestService) {
+    this.alertService = alertService;
     this.getGoals()
   }
   getGoals(): void{
     this.goals = this.goalService.getGoals()
+  }
+
+  ngOnInit(){
+   
+    this.quoteService.quoteRequest()
+    this.quotes = this.quoteService.quote
+
   }
 
   
@@ -42,6 +56,7 @@ export class GoalComponent implements OnInit {
       let toDelete = confirm(`Are you sure yo want to delete ${this.goals[index].name}?`)
       if(toDelete){
         this.goals.splice(index,1)
+        this.alertService.alertMe("The goal has been deleted")
       }
     }
   }
@@ -49,8 +64,7 @@ export class GoalComponent implements OnInit {
   
 
 
-  ngOnInit(): void {
-  }
+  
 
   
 }
