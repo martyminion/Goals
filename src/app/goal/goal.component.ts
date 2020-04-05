@@ -3,6 +3,7 @@ import { Goal } from '../goal'
 import { GoalService } from '../goal-service/goal.service'
 import { AlertService } from '../alert-service/alert.service'
 import { QuoteRequestService } from '../quote-http/quote-request.service'
+
 //import { HttpClient} from '@angular/common/http'
 import { Qote } from '../quote-class/qote';
 @Component({
@@ -16,7 +17,7 @@ export class GoalComponent implements OnInit {
   goals:Goal[];
   alertService:AlertService;
   quotes:Qote
-
+  
 
   constructor(private goalService:GoalService, alertService:AlertService, private quoteService:QuoteRequestService) {
     this.alertService = alertService;
